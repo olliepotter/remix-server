@@ -1,4 +1,5 @@
 import { createRequestHandler } from "@remix-run/express";
+import type { ServerBuild } from "@remix-run/node";
 import compression from "compression";
 import express from "express";
 import morgan from "morgan";
@@ -12,10 +13,12 @@ const viteDevServer =
         })
       );
 
+const build = viteDevServer
+  ? () => viteDevServer.ssrLoadModule("virtual:remix/server-build")
+  : await import("./build/server/index.js");
+
 const remixHandler = createRequestHandler({
-  build: viteDevServer
-    ? () => viteDevServer.ssrLoadModule("virtual:remix/server-build")
-    : await import("./build/server/index.js"),
+  build: build as unknown as ServerBuild,
 });
 
 const app = express();
