@@ -11,6 +11,7 @@ const envSchema = z.object({
       message: "PORT must be a number",
     })
     .default("3000"),
+  COOKIE_SECRET: z.string().min(1, "COOKIE_SECRET is required"),
   FB_ADMIN_PROJECT_ID: z.string().min(1, "FB_ADMIN_PROJECT_ID is required"),
   FB_ADMIN_CLIENT_EMAIL: z
     .string()
