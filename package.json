@@ -4,8 +4,8 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "prebuild": "pnpm run build:server",
     "build": "remix vite:build",
+    "postbuild": "pnpm run build:server",
     "build:server": "esbuild --outfile=index.js --platform=node --format=esm --packages=external --bundle server/index.ts",
     "predev": "pnpm run build:server",
     "dev": "node --env-file=.env ./index.js",

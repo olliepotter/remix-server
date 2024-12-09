@@ -4,8 +4,7 @@ import compression from "compression";
 import express from "express";
 import morgan from "morgan";
 
-// eslint-disable-next-line import/no-unresolved
-import { env } from "@/env.js";
+import { env } from "./env";
 
 const viteDevServer =
   env.NODE_ENV === "production"
