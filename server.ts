@@ -4,8 +4,10 @@ import compression from "compression";
 import express from "express";
 import morgan from "morgan";
 
+import { env } from "./env.ts";
+
 const viteDevServer =
-  process.env.NODE_ENV === "production"
+  env.NODE_ENV === "production"
     ? undefined
     : await import("vite").then((vite) =>
         vite.createServer({
@@ -48,7 +50,7 @@ app.use(morgan("tiny"));
 // handle SSR requests
 app.all("*", remixHandler);
 
-const port = process.env.PORT || 3000;
+const port = env.PORT || 3000;
 app.listen(port, () =>
   console.log(`Express server listening at http://localhost:${port}`)
 );
