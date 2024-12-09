@@ -10,7 +10,6 @@
     "predev": "pnpm run build:server",
     "dev": "node --env-file=.env ./index.js",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "prestart": "pnpm run build:server",
     "start": "cross-env NODE_ENV=production node ./index.js",
     "typecheck": "tsc"
   },
