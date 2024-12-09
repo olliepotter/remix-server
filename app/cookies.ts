@@ -1,5 +1,5 @@
 import { createCookie } from "@remix-run/node";
-import { env } from "../env";
+import { env } from "../server/env";
 
 export const session = createCookie("session", {
   secrets: [env.COOKIE_SECRET],

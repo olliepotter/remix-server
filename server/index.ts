@@ -4,7 +4,8 @@ import compression from "compression";
 import express from "express";
 import morgan from "morgan";
 
-import { env } from "./env.ts";
+// eslint-disable-next-line import/no-unresolved
+import { env } from "@/env.js";
 
 const viteDevServer =
   env.NODE_ENV === "production"
@@ -17,7 +18,7 @@ const viteDevServer =
 
 const build = viteDevServer
   ? () => viteDevServer.ssrLoadModule("virtual:remix/server-build")
-  : await import("./build/server/index.js");
+  : await import("../build/server/index.js");
 
 const remixHandler = createRequestHandler({
   build: build as unknown as ServerBuild,

@@ -1,7 +1,7 @@
 import { App, initializeApp, getApps, cert, getApp } from "firebase-admin/app";
 import { Auth, getAuth } from "firebase-admin/auth";
 import { Firestore, getFirestore } from "firebase-admin/firestore";
-import { env } from "../env";
+import { env } from "../server/env";
 
 let app: App;
 let auth: Auth;
