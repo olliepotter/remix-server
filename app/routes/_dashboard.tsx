@@ -43,14 +43,6 @@ export default function Dashboard() {
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div>
         <Dialog
           open={sidebarOpen}
@@ -101,14 +93,11 @@ export default function Dashboard() {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black px-6 pb-4">
-            <div className="flex h-16 pt-3 shrink-0 items-center">
-              <img
-                alt="Your Company"
-                // src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                src="/theEventapp.svg"
-                className="h-8 w-auto"
-              />
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black px-6 py-4 divide-y divide-gray-200/20">
+            <div className="flex pt-4 pb-2 items-center">
+              <h1 className="ml-3 text-4xl font-bold dark:text-white">
+                theEvent<span className="text-primary">app</span>
+              </h1>
             </div>
             <Navigation />
           </div>
