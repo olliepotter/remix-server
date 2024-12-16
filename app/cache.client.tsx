@@ -1,6 +1,6 @@
 import { ClientLoaderFunctionArgs } from "@remix-run/react";
 
-type CachedResourceKey = "user-riders";
+type CachedResourceKey = "user" | "user-riders";
 
 export const cachedLoaderLocalStorage = async (
   key: CachedResourceKey,

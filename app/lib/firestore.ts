@@ -1,8 +1,8 @@
 import { WhereFilterOp } from "firebase-admin/firestore";
-import { Bike, CreateMxRider, MxRider } from "~/types";
+import { Bike, CreateMxRider, MxRider, User } from "~/types";
 import { db } from "~/firebase.server";
 
-type Collection = "bikes" | "riders";
+type Collection = "bikes" | "riders" | "users";
 //   | "affiliations"
 //   | "bikes"
 //   | "entries"
@@ -27,9 +27,9 @@ type CollectionType<T> = T extends "bikes"
   ? Bike
   : T extends "riders"
   ? MxRider
-  : //   : T extends "users"
-    //   ? User
-    //   : T extends "licences"
+  : T extends "users"
+  ? User
+  : //   : T extends "licences"
     //   ? MxLicence
     //   : T extends "affiliations"
     //   ? Affiliation
@@ -147,6 +147,7 @@ export async function findDocById<T extends Collection>(
   col: T,
   id: string
 ): Promise<CollectionType<T>> {
+  console.log("Calling firestore");
   const ref = db.collection(col).doc(id);
   const docSnap = await ref.get();
   if (docSnap.exists) {

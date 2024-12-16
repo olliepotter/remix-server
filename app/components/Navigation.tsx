@@ -9,8 +9,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { NavLink } from "@remix-run/react";
 import { classNames } from "~/lib/classNames";
+import { User } from "~/types";
 
-export default function Navigation() {
+export default function Navigation({ user }: { user: User }) {
   const navigation = [
     { name: "Entries", href: "entries", icon: TicketIcon },
     { name: "Riders", href: "riders", icon: UserCircleIcon },
@@ -35,7 +36,9 @@ export default function Navigation() {
           <NavLink to="/account" className="flex-shrink-0 block w-full group">
             <div className="flex items-center">
               <div className="ml-3 overflow-hidden">
-                <p className="text-gray-200 font-bold text-lg">Ollie Potter</p>
+                <p className="text-gray-200 font-bold text-lg">
+                  {user.first_name} {user.last_name}
+                </p>
                 <p className="text-sm text-gray-300 font-medium">
                   View account
                 </p>

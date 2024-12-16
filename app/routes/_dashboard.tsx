@@ -1,19 +1,3 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-"use client";
-
 import { useState } from "react";
 import {
   Dialog,
@@ -30,16 +14,56 @@ import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import { Outlet } from "@remix-run/react";
+import {
+  ClientLoaderFunctionArgs,
+  Outlet,
+  useLoaderData,
+} from "@remix-run/react";
 import Navigation from "~/components/Navigation";
+import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { session } from "~/cookies";
+import { auth as serverAuth } from "~/firebase.server";
+import { findDocById } from "~/lib/firestore";
+import { cachedLoader } from "~/cache.client";
 
 const userNavigation = [
   { name: "Your profile", href: "#" },
   { name: "Sign out", href: "#" },
 ];
 
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  // Get the cookie value (JWT)
+  const jwt = await session.parse(request.headers.get("Cookie"));
+
+  // No JWT found...
+  if (!jwt) {
+    return redirect("/login");
+  }
+
+  try {
+    const token = await serverAuth.verifySessionCookie(jwt);
+
+    // Get the user's profile using the token from somewhere (Firestore, Remote Database etc)
+
+    const user = await findDocById("users", token.uid);
+
+    // Return the profile information to the page!
+    return {
+      user,
+    };
+  } catch (e: unknown) {
+    // Invalid JWT - log them out (see below)
+    return redirect("/logout");
+  }
+};
+
+export const clientLoader = async (args: ClientLoaderFunctionArgs) => {
+  return await cachedLoader("user", args);
+};
+
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user } = useLoaderData<typeof loader>();
 
   return (
     <>
@@ -84,7 +108,7 @@ export default function Dashboard() {
                     className="h-8 w-auto"
                   />
                 </div>
-                <Navigation />
+                <Navigation user={user} />
               </div>
             </DialogPanel>
           </div>
@@ -99,7 +123,7 @@ export default function Dashboard() {
                 theEvent<span className="text-primary">app</span>
               </h1>
             </div>
-            <Navigation />
+            <Navigation user={user} />
           </div>
         </div>
 

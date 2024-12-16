@@ -55,3 +55,22 @@ export interface CreateMxRider extends MxRiderForm {
 export interface MxRider extends CreateMxRider {
   id: string;
 }
+
+export type User = {
+  account_type: "organiser" | "standard";
+  customer_id: string;
+  date_of_birth: string;
+  email: string;
+  first_name: string;
+  id: string;
+  last_name: string;
+  organiser_id?: string;
+  phone: string;
+  phone_country: string;
+  phone_country_code: string;
+  phone_national: string;
+  phone_type: string;
+  verification_code?: string;
+  verification_email_status?: string;
+  password_reset_attempt_id?: string;
+};
